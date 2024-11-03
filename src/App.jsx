@@ -1,4 +1,8 @@
 import './App.css'
+import { useState } from 'react';
+import Task from './components/Task';
+import AddTaskForm from './components/AddTaskForm';
+
 
 const App = () => {
   const [tasks, setTasks] = useState([
@@ -7,11 +11,44 @@ const App = () => {
     { id: 3, text: 'Hacer ejercicio', completed: false }
   ]);
 
+  const addTask = (taskText) => {
+    const newTask = {
+      id: taskText.length + 1,
+      text: taskText,
+      completed: false,
+    };
+    setTasks([...tasks, newTask]);
+  };
+
+  const deleteTask = (taskId) => {
+    setTasks(tasks.filter(task => task.id !== taskId));
+  };
+
+  const markedTask = (taskId) => {
+    setTasks(
+      tasks.map((task) =>
+      task.id === taskId ? { ...task, completed: !task.completed } : task
+      )
+    )
+  }
   
 
   return (
-    <></>
+    <>
+      <h1>Lista de Tareas</h1>
+      <AddTaskForm addTask={addTask} />
+      <ul>
+        {tasks.map((task) => (
+          <Task
+            key={task.id}
+            task={task}
+            deleteTask={deleteTask}
+            markedTask={markedTask}
+          />
+        ))}
+      </ul>
+    </>
   );
-};
+}
 
 export default App;
