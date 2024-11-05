@@ -4,11 +4,10 @@ function AddTaskForm({ addTask }) {
     const [taskText, setTaskText] = useState('')
 
     const handleSubmit = (e) => {
-        e.prevenetDefault();
-        if (taskText.trim()) {
+        e.preventDefault();
+        if (!taskText.trim())  return
             addTask(taskText)
             setTaskText('')
-        }
     };
 
     return (

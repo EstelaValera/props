@@ -11,13 +11,16 @@ const App = () => {
     { id: 3, text: 'Hacer ejercicio', completed: false }
   ]);
 
+  const [maxId, setMaxId] = useState(tasks.length + 1)
+
   const addTask = (taskText) => {
     const newTask = {
-      id: taskText.length + 1,
+      id: maxId + 1,
       text: taskText,
       completed: false,
     };
     setTasks([...tasks, newTask]);
+    setMaxId(newTask.id)
   };
 
   const deleteTask = (taskId) => {
